@@ -2,8 +2,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class MainTest {
-
-
+    
     public static void main(String[] args) {
 
         int rut[][] = new int[4][4];
