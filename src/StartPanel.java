@@ -10,7 +10,6 @@ public class StartPanel extends JFrame {
     private final JButton startButton = new JButton("Starta");
     private final JButton exitbutton = new JButton("Avsluta");
 
-
     StartPanel() {
 
         p.setLayout(new BorderLayout());
