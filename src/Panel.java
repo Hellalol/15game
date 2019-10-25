@@ -22,6 +22,7 @@ public class Panel extends JFrame implements ActionListener {
         setSize(300,100);
         add(p);
         setVisible(true);
+        setBackground(Color.GRAY);
         startButton.addActionListener(this);
         exitbutton.addActionListener(this);
     }
