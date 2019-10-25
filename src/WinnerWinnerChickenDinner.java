@@ -5,16 +5,15 @@ public class WinnerWinnerChickenDinner extends JFrame {
 
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
-    private final JLabel titelLabel = new JLabel("15game");
-    private final JLabel infoLabel = new JLabel("Välkommen till 15game"+"\n"+"Produced by FreWil"+"\u00A9");
+    private final JLabel infoLabel = new JLabel("Välkommen till 15game");
     private final JButton startButton = new JButton("Starta");
     private final JButton exitbutton = new JButton("Avsluta");
 
     WinnerWinnerChickenDinner() {
 
         p.setLayout(new BorderLayout());
+        setTitle("15game ::: Produced by FreWil\u00A9");
         p.add(infoLabel, BorderLayout.CENTER);
-        p.add(titelLabel, BorderLayout.NORTH);
         buttonpanel.add(startButton);
         buttonpanel.add(exitbutton);
         p.add(buttonpanel, BorderLayout.SOUTH);
