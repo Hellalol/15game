@@ -14,18 +14,21 @@ public class Panel extends JFrame implements ActionListener {
         p.setLayout(new BorderLayout());
         p.add(infoLabel, BorderLayout.CENTER);
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         buttonpanel.add(startButton);
         buttonpanel.add(exitbutton);
         p.add(buttonpanel, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(380,100);
+        setSize(400,100);
         add(p);
         setVisible(true);
         buttonpanel.setBackground(Color.GRAY);
-        p.setBackground(Color.GRAY);
-        startButton.setBackground(Color.GRAY);
-        exitbutton.setBackground(Color.GRAY);
+        p.setBackground(Color.gray);
+        startButton.setBackground(new Color(155258963));
+        startButton.setForeground(Color.green);
+        exitbutton.setBackground(new Color(155258963));
+        exitbutton.setForeground(Color.green);
 
         startButton.addActionListener(this);
         exitbutton.addActionListener(this);
@@ -34,8 +37,8 @@ public class Panel extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            gamePanal();
             setVisible(false);
+            gamePanal();
 
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
@@ -43,7 +46,7 @@ public class Panel extends JFrame implements ActionListener {
     }
 
     public void gamePanal(){
-        SwingUtilities.invokeLater(() -> {
+
             JFrame f = new JFrame();
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
@@ -52,7 +55,7 @@ public class Panel extends JFrame implements ActionListener {
             f.pack();
             f.setLocationRelativeTo(null);
             f.setVisible(true);
-        });
+
     }
 
 
