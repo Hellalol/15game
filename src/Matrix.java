@@ -3,20 +3,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Matrix extends JFrame implements ActionListener {
+public class Matrix extends JPanel implements ActionListener {
+
 
     JPanel panel = new JPanel();
     JButton button;
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
 
-
     Matrix() {
         add(panel);
         addButtons(panel);
         setVisible(true);
-        setSize(800, 600);
-        setLocationRelativeTo(null);
+        //addButtons.setPreferredSize(new Dimension(800, 600));
+
+        //setSize(800, 600);
+        //setLocationRelativeTo(null);
         panel.setLayout(new GridLayout(4, 4));
         int buttonCount = 0;
         String buttonID;
