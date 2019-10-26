@@ -25,7 +25,7 @@ public class Matrix extends JFrame implements ActionListener {
                 counter++;
                 gameboard[x][y] = new JButton(String.valueOf(counter));
                 gameboard[x][y].setFont(new Font("Arial", Font.PLAIN,40));
-                gameboard[x][y].setBackground(Color.white);
+                gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].addActionListener(this);
                 panel.add(gameboard[x][y]);
             }

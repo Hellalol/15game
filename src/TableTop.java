@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 
 public class TableTop extends JFrame {
 
@@ -13,9 +14,14 @@ public class TableTop extends JFrame {
        add(board);
        setSize(sizeOfBoard);
        setLocationRelativeTo(null);
+       board.setBackground(Color.GRAY);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
        board.setLayout(new GridLayout(4,4));
        for (int i = 1; i < 16; i++) {
            board.add(button = new JButton());
+           button.setBackground(new Color(155258963));
+
        }
    }
 
