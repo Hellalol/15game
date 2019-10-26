@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Random;
 
 public class Matrix extends JFrame implements ActionListener {
 
@@ -40,11 +44,25 @@ public class Matrix extends JFrame implements ActionListener {
 
     }
 
-    public void randomNumbersInGame(){
-        Integer[] array = new Integer[]{1, 2, 3, 4};
+
+    public static void randomNumbersInGame(){
+        //Integer[] array = new Integer[]{1, 2, 3, 4};
 
         int[] zeroToFifteen = {0,1,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        System.out.println(Arrays.toString(zeroToFifteen));
 
+        Random random = new Random();
+        for (int i = zeroToFifteen.length -1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            int a = zeroToFifteen[index];
+            zeroToFifteen[index] = zeroToFifteen[i];
+            zeroToFifteen[i] = a;
+        }
+
+        System.out.println(Arrays.toString(zeroToFifteen));
+
+
+        /*
         for (int i = 0; i < zeroToFifteen.length ; i++) {
             zeroToFifteen[i] = i;
         }
@@ -53,11 +71,15 @@ public class Matrix extends JFrame implements ActionListener {
             System.out.print(value);
         }
 
+         */
+
 
     }
 
     public static void main(String[] args) {
-        Matrix ne = new Matrix();
+        //Matrix ne = new Matrix();
+
+        randomNumbersInGame();
 
     }
     @Override

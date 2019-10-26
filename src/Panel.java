@@ -104,17 +104,25 @@ public class Panel extends JFrame implements ActionListener {
     }
 
     private JPanel addButtons() {
+        int counter = 0;
+        StringBuilder isGameFinished = new StringBuilder();
         final JPanel grid = new JPanel();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                gameboard[x][y] = new JButton("");
+                counter++;
+                gameboard[x][y] = new JButton(String.valueOf(counter));
+                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN,40));
                 gameboard[x][y].setBackground(new Color(155258963));
+                gameboard[x][y].setForeground(Color.green);
                 gameboard[x][y].addActionListener(this);
+                isGameFinished.append(gameboard[x][y].getText());
                 grid.add(gameboard[x][y]);
                 grid.setLayout(new GridLayout(4, 4));
             }
         }
+        gameboard[3][3].setText("0");
+        //randomNumbersInGame();
         return grid;
     }
 
