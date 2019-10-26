@@ -36,10 +36,7 @@ public class TableTop extends JFrame {
                 counter++;
             }
         }
+
         return rut;
-
-
     }
-
-
 }

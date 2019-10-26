@@ -13,7 +13,7 @@ public class Panel extends JFrame implements ActionListener {
     Panel() {
         p.setLayout(new BorderLayout());
         p.add(infoLabel, BorderLayout.CENTER);
-        setTitle("15game ::: Produced by FreWil\u00A9");
+        setTitle("15game :|:|: Produced by FreWil\u00A9");
         buttonpanel.add(startButton);
         buttonpanel.add(exitbutton);
         p.add(buttonpanel, BorderLayout.SOUTH);
@@ -51,7 +51,7 @@ public class Panel extends JFrame implements ActionListener {
         });
     }
 
-    
+
     public static void main(String[] args) {
         Panel sp = new Panel();
     }
