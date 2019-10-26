@@ -17,8 +17,10 @@ public class Matrix extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         panel.setLayout(new GridLayout(4, 4));
     }
+
     private void addButtons(JPanel panel) {
         int counter = 0;
+        StringBuilder isGameFinished = new StringBuilder();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
@@ -28,10 +30,29 @@ public class Matrix extends JFrame implements ActionListener {
                 gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].setForeground(Color.green);
                 gameboard[x][y].addActionListener(this);
+                isGameFinished.append(gameboard[x][y].getText());
                 panel.add(gameboard[x][y]);
             }
         }
         gameboard[3][3].setText("0");
+        randomNumbersInGame();
+
+    }
+
+    public void randomNumbersInGame(){
+        Integer[] array = new Integer[]{1, 2, 3, 4};
+
+        int[] zeroToFifteen = {0,1,3,4,5,6,7,8,9,10,11,12,13,14,15};
+
+        for (int i = 0; i < zeroToFifteen.length ; i++) {
+            zeroToFifteen[i] = i;
+        }
+
+        for (int value : zeroToFifteen) {
+            System.out.print(value);
+        }
+
+
     }
 
     public static void main(String[] args) {
