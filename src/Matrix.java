@@ -3,11 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Matrix extends JPanel implements ActionListener {
+public class Matrix extends JFrame implements ActionListener {
 
-
-    JPanel panel = new JPanel();
-    JButton button;
+    private JPanel panel = new JPanel();
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
 
@@ -15,72 +13,53 @@ public class Matrix extends JPanel implements ActionListener {
         add(panel);
         addButtons(panel);
         setVisible(true);
-        //addButtons.setPreferredSize(new Dimension(800, 600));
-
-        //setSize(800, 600);
-        //setLocationRelativeTo(null);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
         panel.setLayout(new GridLayout(4, 4));
-        int buttonCount = 0;
-        String buttonID;
-        buttonID = Integer.toString(++buttonCount);
-
-
     }
 
 
     private void addButtons(JPanel panel) {
+        int counter = 0;
+        StringBuilder isGameFinished = new StringBuilder();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                gameboard[x][y] = new JButton("");
+                counter++;
+                gameboard[x][y] = new JButton(String.valueOf(counter));
+                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN,40));
                 gameboard[x][y].setBackground(new Color(155258963));
+                gameboard[x][y].setForeground(Color.green);
                 gameboard[x][y].addActionListener(this);
+                isGameFinished.append(gameboard[x][y].getText());
                 panel.add(gameboard[x][y]);
-
             }
         }
+        gameboard[3][3].setText("0");
+        randomNumbersInGame();
+
     }
 
+    public void randomNumbersInGame(){
+        Integer[] array = new Integer[]{1, 2, 3, 4};
+
+        int[] zeroToFifteen = {0,1,3,4,5,6,7,8,9,10,11,12,13,14,15};
+
+        for (int i = 0; i < zeroToFifteen.length ; i++) {
+            zeroToFifteen[i] = i;
+        }
+
+        for (int value : zeroToFifteen) {
+            System.out.print(value);
+        }
+
+
+    }
 
     public static void main(String[] args) {
-
-        Panel p = new Panel();
-
-        //Matrix test = new Matrix();
-
-        gameboard[3][3].setBackground(Color.black);
-
-        int r = 3;
-        int c = 2;
-
-
-        /*try {
-            System.out.println(gameboard[r - 1][c]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("utanför norr");
-        }
-
-        try {
-            System.out.println(gameboard[r][c + 1]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("utanför öst");
-        }
-
-        try {
-            System.out.println(gameboard[r + 1][c]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("utanför söder");
-        }
-
-        try {
-            System.out.println(gameboard[r][c - 1]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("utanför väst");
-        }
-    }*/
+        Matrix ne = new Matrix();
 
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -89,19 +68,32 @@ public class Matrix extends JPanel implements ActionListener {
                 if (gameboard[y][x] == e.getSource()) {
                     if (sign % 2 == 0) {
                         try {
-                            gameboard[y - 1][x].setBackground(Color.red);
+                            if(gameboard[y - 1][x].getText().equals("0")){
+                                gameboard[y - 1][x].setText(gameboard[y][x].getText());
+                                gameboard[y][x].setText("0");
+                            }
                         } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                         try {
-                            gameboard[y][x + 1].setBackground(Color.red);
+                            if(gameboard[y][x + 1].getText().equals("0")) {
+                                gameboard[y][x + 1].setText(gameboard[y][x].getText());
+                                gameboard[y][x].setText("0");
+                            }
                         } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                         try {
-                            gameboard[y + 1][x].setBackground(Color.red);
+                            if(gameboard[y + 1][x].getText().equals("0")){
+                                gameboard[y + 1][x].setText(gameboard[y][x].getText());
+                                gameboard[y][x].setText("0");
+
+                            }
                         } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                         try {
-                            gameboard[y][x - 1].setBackground(Color.red);
+                            if(gameboard[y][x - 1].getText().equals("0")){
+                                gameboard[y][x - 1].setText(gameboard[y][x].getText());
+                                gameboard[y][x].setText("0");
+                            }
                         } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                     }
@@ -116,3 +108,5 @@ public class Matrix extends JPanel implements ActionListener {
 
     }
 }
+
+
