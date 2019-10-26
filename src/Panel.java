@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
 
 public class Panel extends JFrame implements ActionListener {
     private final JPanel p = new JPanel();
@@ -24,7 +23,7 @@ public class Panel extends JFrame implements ActionListener {
         p.add(buttonpanel, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400,100);
+        setSize(400, 100);
         add(p);
         setVisible(true);
         buttonpanel.setBackground(Color.GRAY);
@@ -45,46 +44,63 @@ public class Panel extends JFrame implements ActionListener {
 
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
-        }else{
+        } else {
             for (int y = 0; y < 4; y++) {
                 for (int x = 0; x < 4; x++) {
                     if (gameboard[y][x] == e.getSource()) {
                         if (sign % 2 == 0) {
                             try {
-                                gameboard[y - 1][x].setBackground(Color.red);
+                                if (gameboard[y - 1][x].getText().equals("0")) {
+                                    gameboard[y - 1][x].setText(gameboard[y][x].getText());
+                                    gameboard[y][x].setText("0");
+                                }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                gameboard[y][x + 1].setBackground(Color.red);
+                                if (gameboard[y][x + 1].getText().equals("0")) {
+                                    gameboard[y][x + 1].setText(gameboard[y][x].getText());
+                                    gameboard[y][x].setText("0");
+                                }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                gameboard[y + 1][x].setBackground(Color.red);
+                                if (gameboard[y + 1][x].getText().equals("0")) {
+                                    gameboard[y + 1][x].setText(gameboard[y][x].getText());
+                                    gameboard[y][x].setText("0");
+
+                                }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                gameboard[y][x - 1].setBackground(Color.red);
+                                if (gameboard[y][x - 1].getText().equals("0")) {
+                                    gameboard[y][x - 1].setText(gameboard[y][x].getText());
+                                    gameboard[y][x].setText("0");
+                                }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                         }
                         break;
+
                     }
+
+
                 }
+
             }
         }
     }
 
-    public void gamePanal(){
+    public void gamePanal() {
 
-            JFrame f = new JFrame();
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
-            f.setResizable(false);
-            f.add(addButtons(), BorderLayout.CENTER); //tycka in spelets panel i denna frame
-            f.setSize(800,600);
-            pack();
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
+        f.setResizable(false);
+        f.add(addButtons(), BorderLayout.CENTER); //tycka in spelets panel i denna frame
+        f.setSize(800, 600);
+        pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }
 
     private JPanel addButtons() {
