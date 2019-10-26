@@ -18,6 +18,7 @@ public class Matrix extends JFrame implements ActionListener {
         panel.setLayout(new GridLayout(4, 4));
     }
 
+
     private void addButtons(JPanel panel) {
         int counter = 0;
         StringBuilder isGameFinished = new StringBuilder();
