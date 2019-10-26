@@ -9,9 +9,6 @@ public class MainTest {
     
     public static void main(String[] args) {
 
-        anim
-
-
 
         int rut[][] = new int[4][4];
 

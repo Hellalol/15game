@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Panel extends JFrame implements ActionListener {
-    private final JFrame f = new JFrame("15game :|:|: Produced by FreWil\u00A9");
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
@@ -12,8 +11,6 @@ public class Panel extends JFrame implements ActionListener {
     private final JButton exitbutton = new JButton("Avsluta");
 
     Panel() {
-        f.add(p);
-        f.setTitle("15game :|:|: Produced by FreWil\u00A9");
         p.setLayout(new BorderLayout());
         p.add(infoLabel, BorderLayout.CENTER);
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -26,7 +23,6 @@ public class Panel extends JFrame implements ActionListener {
         add(p);
         setVisible(true);
         buttonpanel.setBackground(Color.GRAY);
-        f.setBackground(Color.GRAY);
         p.setBackground(Color.GRAY);
         startButton.setBackground(Color.GRAY);
         exitbutton.setBackground(Color.GRAY);
