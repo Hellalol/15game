@@ -14,7 +14,9 @@ public class Panel extends JFrame implements ActionListener {
     private final JPanel Grid = new JPanel();
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
-    int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+    private final String solved = "159132610143711154812";
+    private final int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+    private final int[] almostsolved = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15};
 
     Panel() {
         p.setLayout(new BorderLayout());
@@ -82,6 +84,19 @@ public class Panel extends JFrame implements ActionListener {
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                         }
+                        String g = "";
+                        for (int i = 0; i < gameboard.length; i++) {
+                            for (int j =0; j< gameboard[i].length; j++) {
+                                g += gameboard[i][j].getText();
+                                if(g.length()==21) {
+                                    if (didWeWin(g)){
+                                        dispose();
+                                        JOptionPane.showMessageDialog(null, "WINNER WINNER CHICKEN DINNER!");
+                                        //todo write all winconditions, example mp4 player and so on
+                                    }
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -94,7 +109,7 @@ public class Panel extends JFrame implements ActionListener {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         f.setResizable(false);
-        f.add(addButtons(), BorderLayout.CENTER); //tycka in spelets panel i denna frame
+        f.add(addButtons(), BorderLayout.CENTER);
         f.setSize(800, 600);
         pack();
         f.setLocationRelativeTo(null);
@@ -110,7 +125,8 @@ public class Panel extends JFrame implements ActionListener {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 counter++;
-                gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
+                //gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
+                gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter-1]));
                 gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 40));
                 gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].setForeground(Color.green);
@@ -120,10 +136,6 @@ public class Panel extends JFrame implements ActionListener {
                 grid.setLayout(new GridLayout(4, 4));
                 if(gameboard[x][y].getText().equalsIgnoreCase("0")){
                     gameboard[x][y].setText("");
-                }
-                System.out.println();
-                if (didWeWin()){
-                    JOptionPane.showMessageDialog(null, "Winner Winner Chicken Dinner");
                 }
             }
         }
@@ -141,17 +153,8 @@ public class Panel extends JFrame implements ActionListener {
         return zeroToFifteen;
     }
 
-    public boolean didWeWin() {
-        String g = "";
-        String gb = "";
-        for (int i = 0; i < gameboard.length; i++) {
-            for (int j =0; j< gameboard[i].length; j++) {
-                g += gameboard[i][j];
-            }
-        }
-        for (int i = 0; i < zeroToFifteen.length; i++){
-            gb += zeroToFifteen[i];
-        }if(g.equalsIgnoreCase(gb)){
+    public boolean didWeWin(String g) {
+        if(g.equalsIgnoreCase(solved)){
             return true;
         }else{
             return false;
