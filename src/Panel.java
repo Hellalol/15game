@@ -150,6 +150,7 @@ public class Panel extends JFrame implements ActionListener {
         return zeroToFifteen;
     }
 
+
     public boolean didWeWin(String checkIfSolved) {
         if(checkIfSolved.equalsIgnoreCase(solved)){
             return true;
