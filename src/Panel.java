@@ -11,7 +11,6 @@ public class Panel extends JFrame implements ActionListener {
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
     private final JButton startButton = new JButton("Starta");
     private final JButton exitbutton = new JButton("Avsluta");
-    private final JPanel Grid = new JPanel();
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
     private final String solved = "159132610143711154812";
@@ -118,8 +117,7 @@ public class Panel extends JFrame implements ActionListener {
 
     private JPanel addButtons() {
         int counter = 0;
-        int[] randomNumbersInGame = randomNumbersInGame();
-        StringBuilder isGameFinished = new StringBuilder();
+        //int[] randomNumbersInGame = randomNumbersInGame();
         final JPanel grid = new JPanel();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
@@ -131,7 +129,6 @@ public class Panel extends JFrame implements ActionListener {
                 gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].setForeground(Color.green);
                 gameboard[x][y].addActionListener(this);
-                isGameFinished.append(gameboard[x][y].getText());
                 grid.add(gameboard[x][y]);
                 grid.setLayout(new GridLayout(4, 4));
                 if(gameboard[x][y].getText().equalsIgnoreCase("0")){
@@ -146,15 +143,15 @@ public class Panel extends JFrame implements ActionListener {
         Random random = new Random();
         for (int i = zeroToFifteen.length - 1; i > 0; i--) {
             int index = random.nextInt(i + 1);
-            int a = zeroToFifteen[index];
+            int temp = zeroToFifteen[index];
             zeroToFifteen[index] = zeroToFifteen[i];
-            zeroToFifteen[i] = a;
+            zeroToFifteen[i] = temp;
         }
         return zeroToFifteen;
     }
 
-    public boolean didWeWin(String g) {
-        if(g.equalsIgnoreCase(solved)){
+    public boolean didWeWin(String checkIfSolved) {
+        if(checkIfSolved.equalsIgnoreCase(solved)){
             return true;
         }else{
             return false;
