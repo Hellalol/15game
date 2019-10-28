@@ -14,7 +14,7 @@ public class Panel extends JFrame implements ActionListener {
     private final JPanel Grid = new JPanel();
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
-    int[] zeroToFifteen = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
 
     Panel() {
         p.setLayout(new BorderLayout());
@@ -121,7 +121,8 @@ public class Panel extends JFrame implements ActionListener {
                 if(gameboard[x][y].getText().equalsIgnoreCase("0")){
                     gameboard[x][y].setText("");
                 }
-                if (didWeWin()==true){
+                System.out.println();
+                if (didWeWin()){
                     JOptionPane.showMessageDialog(null, "Winner Winner Chicken Dinner");
                 }
             }
