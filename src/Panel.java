@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
     private final JPanel p = new JPanel();
@@ -12,6 +13,7 @@ public class Panel extends JFrame implements ActionListener {
     private final JPanel Grid = new JPanel();
     private static JButton[][] gameboard = new JButton[4][4];
     private int sign = 0;
+    int[] zeroToFifteen = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     Panel() {
         p.setLayout(new BorderLayout());
@@ -80,18 +82,13 @@ public class Panel extends JFrame implements ActionListener {
                             }
                         }
                         break;
-
                     }
-
-
                 }
-
             }
         }
     }
 
     public void gamePanal() {
-
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
@@ -105,14 +102,15 @@ public class Panel extends JFrame implements ActionListener {
 
     private JPanel addButtons() {
         int counter = 0;
+        int[] newarray = randomNumbersInGame();
         StringBuilder isGameFinished = new StringBuilder();
         final JPanel grid = new JPanel();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 counter++;
-                gameboard[x][y] = new JButton(String.valueOf(counter));
-                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN,40));
+                gameboard[x][y] = new JButton(String.valueOf(newarray[counter - 1]));
+                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 40));
                 gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].setForeground(Color.green);
                 gameboard[x][y].addActionListener(this);
@@ -121,9 +119,18 @@ public class Panel extends JFrame implements ActionListener {
                 grid.setLayout(new GridLayout(4, 4));
             }
         }
-        gameboard[3][3].setText("0");
-        //randomNumbersInGame();
         return grid;
+    }
+
+    public int[] randomNumbersInGame() {
+        Random random = new Random();
+        for (int i = zeroToFifteen.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            int a = zeroToFifteen[index];
+            zeroToFifteen[index] = zeroToFifteen[i];
+            zeroToFifteen[i] = a;
+        }
+        return zeroToFifteen;
     }
 
     public static void main(String[] args) {
