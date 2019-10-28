@@ -47,7 +47,7 @@ public class Panel extends JFrame implements ActionListener {
 
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
-        } else {
+        }else {
             for (int y = 0; y < 4; y++) {
                 for (int x = 0; x < 4; x++) {
                     if (gameboard[y][x] == e.getSource()) {
@@ -121,6 +121,9 @@ public class Panel extends JFrame implements ActionListener {
                 if(gameboard[x][y].getText().equalsIgnoreCase("0")){
                     gameboard[x][y].setText("");
                 }
+                if (didWeWin()==true){
+                    JOptionPane.showMessageDialog(null, "Winner Winner Chicken Dinner");
+                }
             }
         }
         return grid;
@@ -135,6 +138,23 @@ public class Panel extends JFrame implements ActionListener {
             zeroToFifteen[i] = a;
         }
         return zeroToFifteen;
+    }
+
+    public boolean didWeWin() {
+        String g = "";
+        String gb = "";
+        for (int i = 0; i < gameboard.length; i++) {
+            for (int j =0; j< gameboard[i].length; j++) {
+                g += gameboard[i][j];
+            }
+        }
+        for (int i = 0; i < zeroToFifteen.length; i++){
+            gb += zeroToFifteen[i];
+        }if(g.equalsIgnoreCase(gb)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public static void main(String[] args) {
