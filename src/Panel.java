@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
+
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
