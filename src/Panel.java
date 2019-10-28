@@ -52,31 +52,31 @@ public class Panel extends JFrame implements ActionListener {
                     if (gameboard[y][x] == e.getSource()) {
                         if (sign % 2 == 0) {
                             try {
-                                if (gameboard[y - 1][x].getText().equals("0")) {
+                                if (gameboard[y - 1][x].getText().equals("")) {
                                     gameboard[y - 1][x].setText(gameboard[y][x].getText());
-                                    gameboard[y][x].setText("0");
+                                    gameboard[y][x].setText("");
                                 }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                if (gameboard[y][x + 1].getText().equals("0")) {
+                                if (gameboard[y][x + 1].getText().equals("")) {
                                     gameboard[y][x + 1].setText(gameboard[y][x].getText());
-                                    gameboard[y][x].setText("0");
+                                    gameboard[y][x].setText("");
                                 }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                if (gameboard[y + 1][x].getText().equals("0")) {
+                                if (gameboard[y + 1][x].getText().equals("")) {
                                     gameboard[y + 1][x].setText(gameboard[y][x].getText());
-                                    gameboard[y][x].setText("0");
+                                    gameboard[y][x].setText("");
 
                                 }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                             try {
-                                if (gameboard[y][x - 1].getText().equals("0")) {
+                                if (gameboard[y][x - 1].getText().equals("")) {
                                     gameboard[y][x - 1].setText(gameboard[y][x].getText());
-                                    gameboard[y][x].setText("0");
+                                    gameboard[y][x].setText("");
                                 }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
@@ -102,14 +102,14 @@ public class Panel extends JFrame implements ActionListener {
 
     private JPanel addButtons() {
         int counter = 0;
-        int[] newarray = randomNumbersInGame();
+        int[] randomNumbersInGame = randomNumbersInGame();
         StringBuilder isGameFinished = new StringBuilder();
         final JPanel grid = new JPanel();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 counter++;
-                gameboard[x][y] = new JButton(String.valueOf(newarray[counter - 1]));
+                gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
                 gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 40));
                 gameboard[x][y].setBackground(new Color(155258963));
                 gameboard[x][y].setForeground(Color.green);
@@ -117,6 +117,9 @@ public class Panel extends JFrame implements ActionListener {
                 isGameFinished.append(gameboard[x][y].getText());
                 grid.add(gameboard[x][y]);
                 grid.setLayout(new GridLayout(4, 4));
+                if(gameboard[x][y].getText().equalsIgnoreCase("0")){
+                    gameboard[x][y].setText("");
+                }
             }
         }
         return grid;
