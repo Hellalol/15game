@@ -41,7 +41,7 @@ public class Panel extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            setVisible(false);
+            dispose();
             gamePanal();
 
         } else if (e.getSource() == exitbutton) {
