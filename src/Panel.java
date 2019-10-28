@@ -105,6 +105,26 @@ public class Panel extends JFrame implements ActionListener {
 
     public void gamePanal() {
         JFrame f = new JFrame();
+        //f.setUndecorated(true); //måste ha egna exitknappar för att funkar
+        //f.getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG); //välja egen borderfärgtema
+        JPanel headPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
+        JLabel headLabel = new JLabel("15GAME");
+        JLabel inc = new JLabel("\u00A9");
+        headLabel.setFont(new Font("Arial", Font.BOLD, 60));
+        inc.setFont(new Font("Arial", Font.BOLD, 20));
+        headPanel.setBackground(Color.gray);
+        headLabel.setForeground(Color.black);
+        inc.setForeground(Color.black);
+        JButton b1 = new JButton();
+        JButton b2 = new JButton();
+        f.add(headPanel,BorderLayout.NORTH);
+        f.add(bottomPanel,BorderLayout.SOUTH);
+        headPanel.add(headLabel);
+        headPanel.add(inc);
+        bottomPanel.add(b1);
+        bottomPanel.add(b2);
+
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         f.setResizable(false);
@@ -116,9 +136,9 @@ public class Panel extends JFrame implements ActionListener {
     }
 
     private JPanel addButtons() {
+        JPanel grid = new JPanel();
         int counter = 0;
         //int[] randomNumbersInGame = randomNumbersInGame();
-        final JPanel grid = new JPanel();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
