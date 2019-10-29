@@ -1,7 +1,10 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
@@ -12,8 +15,13 @@ public class Panel extends JFrame implements ActionListener {
     private final JLabel theme = new JLabel("Tema:");
     private final JButton startButton = new JButton("Starta");
     private final JButton exitbutton = new JButton("Avsluta");
+    private final JPanel headPanel = new JPanel();
+    private final JPanel bottomPanel = new JPanel();
+    private final JLabel headLabel = new JLabel("15GAME");
+    private final JLabel inc = new JLabel("\u00A9");
+    private final JButton shuffleButton = new JButton("Blanda om");
     private String[] themeChoices = {"Default", "Joker", "Dark", "Basic", "BlåOrange", "Soviet", "Rålit"};
-    final JComboBox<String> dropDown = new JComboBox<>(themeChoices);
+    private final JComboBox<String> dropDown = new JComboBox<>(themeChoices);
     private static JButton[][] gameboard = new JButton[4][4];
     private final String solved = "159132610143711154812";
     private final int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
@@ -31,7 +39,6 @@ public class Panel extends JFrame implements ActionListener {
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         infoLabel.setFont(new Font("Arial", Font.PLAIN, 40));
-        //p.add(imageLabel,BorderLayout.CENTER);
         buttonpanel.setLayout(new GridLayout());
         buttonpanel.add(startButton);
         buttonpanel.add(exitbutton);
@@ -49,8 +56,11 @@ public class Panel extends JFrame implements ActionListener {
         startButton.setForeground(Color.green);
         exitbutton.setBackground(new Color(155258963));
         exitbutton.setForeground(Color.green);
+        shuffleButton.setBackground(new Color(155258963));
+        shuffleButton.setForeground(Color.green);
         startButton.addActionListener(this);
         exitbutton.addActionListener(this);
+        shuffleButton.addActionListener(this);
         pack();
 
         dropDown.addActionListener(e -> {
@@ -62,6 +72,10 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(Color.green);
                     exitbutton.setBackground(new Color(155258963));
                     exitbutton.setForeground(Color.green);
+                    shuffleButton.setBackground(new Color(155258963));
+                    shuffleButton.setForeground(Color.green);
+                    bottomPanel.setBackground(new Color(155258963));
+                    headPanel.setBackground(new Color(155258963));
                     buttonColor = new Color(155258963);
                     numberColor = Color.green;
                     break;
@@ -70,6 +84,10 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(Color.black);
                     exitbutton.setBackground(Color.darkGray);
                     exitbutton.setForeground(Color.black);
+                    shuffleButton.setBackground(Color.darkGray);
+                    shuffleButton.setForeground(Color.black);
+                    bottomPanel.setBackground(Color.darkGray);
+                    headPanel.setBackground(Color.darkGray);
                     buttonColor = Color.darkGray;
                     numberColor = Color.black;
                     break;
@@ -78,6 +96,10 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(Color.black);
                     exitbutton.setBackground(Color.white);
                     exitbutton.setForeground(Color.black);
+                    shuffleButton.setBackground(Color.white);
+                    shuffleButton.setForeground(Color.black);
+                    bottomPanel.setBackground(Color.white);
+                    headPanel.setBackground(Color.white);
                     buttonColor = Color.white;
                     numberColor = Color.black;
                     break;
@@ -86,6 +108,10 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(Color.blue);
                     exitbutton.setBackground(Color.orange);
                     exitbutton.setForeground(Color.blue);
+                    shuffleButton.setBackground(Color.orange);
+                    shuffleButton.setForeground(Color.blue);
+                    bottomPanel.setBackground(Color.orange);
+                    headPanel.setBackground(Color.orange);
                     buttonColor = Color.orange;
                     numberColor = Color.blue;
                     break;
@@ -94,6 +120,10 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(Color.yellow);
                     exitbutton.setBackground(Color.red);
                     exitbutton.setForeground(Color.yellow);
+                    shuffleButton.setBackground(Color.red);
+                    shuffleButton.setForeground(Color.yellow);
+                    bottomPanel.setBackground(Color.red);
+                    headPanel.setBackground(Color.red);
                     buttonColor = Color.red;
                     numberColor = Color.yellow;
                     break;
@@ -102,6 +132,11 @@ public class Panel extends JFrame implements ActionListener {
                     startButton.setForeground(randomColor2);
                     exitbutton.setBackground(randomColor1);
                     exitbutton.setForeground(randomColor2);
+                    shuffleButton.setBackground(randomColor1);
+                    shuffleButton.setForeground(randomColor2);
+                    bottomPanel.setBackground(randomColor2);
+                    bottomPanel.setForeground(randomColor2);
+                    headPanel.setBackground(randomColor2);
                     buttonColor = randomColor1;
                     numberColor = randomColor2;
                     break;
@@ -109,14 +144,20 @@ public class Panel extends JFrame implements ActionListener {
         });
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             dispose();
+            music();
             gamePanal();
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
+        } else if (e.getSource() == shuffleButton) {
+            JComponent comp = (JComponent) e.getSource();
+            Window win = SwingUtilities.getWindowAncestor(comp);
+            win.dispose();
+            gamePanal();
+
         } else {
             for (int y = 0; y < 4; y++) {
                 for (int x = 0; x < 4; x++) {
@@ -151,15 +192,19 @@ public class Panel extends JFrame implements ActionListener {
                         } catch (ArrayIndexOutOfBoundsException ignored) {
                         }
                         String g = "";
+                        int winConditionCounter = 0;
                         for (int i = 0; i < gameboard.length; i++) {
                             for (int j = 0; j < gameboard[i].length; j++) {
                                 g += gameboard[i][j].getText();
-                                if (g.length() == 21) {
+                                if(g.length() == 21){
+                                    winConditionCounter++;
+                                }
+                                if (g.length() == 21 && winConditionCounter == 1) {
                                     if (didWeWin(g)) {
                                         dispose();
-                                        JOptionPane.showMessageDialog(null, "WINNER WINNER CHICKEN DINNER!");
-                                        System.exit(0);
-                                        //todo write all winconditions, example mp4 player and so on
+                                        JOptionPane.showMessageDialog(null, "WINNER WINNER " +
+                                                "CHICKEN DINNER!\nCongratulations, You Did Your Job. Do You Want a " +
+                                                "Cookie?\nNow Back To Your Real Job!");
                                     }
                                 }
                             }
@@ -173,26 +218,17 @@ public class Panel extends JFrame implements ActionListener {
 
     public void gamePanal() {
         JFrame f = new JFrame();
-        //f.setUndecorated(true); //måste ha egna exitknappar för att funkar
+        f.setUndecorated(true);
         //f.getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG); //välja egen borderfärgtema
-        JPanel headPanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
-        JLabel headLabel = new JLabel("15GAME");
-        JLabel inc = new JLabel("\u00A9");
         headLabel.setFont(new Font("Arial", Font.BOLD, 60));
         inc.setFont(new Font("Arial", Font.BOLD, 20));
-        headPanel.setBackground(Color.gray);
-        headLabel.setForeground(Color.black);
         inc.setForeground(Color.black);
-        JButton b1 = new JButton();
-        JButton b2 = new JButton();
-        f.add(headPanel, BorderLayout.NORTH);
-        f.add(bottomPanel, BorderLayout.SOUTH);
         headPanel.add(headLabel);
         headPanel.add(inc);
-        bottomPanel.add(b1);
-        bottomPanel.add(b2);
-
+        bottomPanel.add(shuffleButton);
+        bottomPanel.add(exitbutton);
+        f.add(headPanel, BorderLayout.NORTH);
+        f.add(bottomPanel, BorderLayout.SOUTH);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         f.setResizable(false);
@@ -238,7 +274,6 @@ public class Panel extends JFrame implements ActionListener {
         return zeroToFifteen;
     }
 
-
     public boolean didWeWin(String checkIfSolved) {
         if (checkIfSolved.equalsIgnoreCase(solved)) {
             return true;
@@ -247,7 +282,26 @@ public class Panel extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
+    public void music() {
+        File musicPath1 = new File("C:/Users/wilhe/Desktop/Memefest/TSFH.wav");
+        File musicPath2 = new File("C:/Users/wilhe/Desktop/Memefest/MegaMan2.wav");
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(musicPath2);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (UnsupportedAudioFileException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws LineUnavailableException {
         Panel sp = new Panel();
     }
 }
