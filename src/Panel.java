@@ -1,5 +1,6 @@
 import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,7 @@ public class Panel extends JFrame implements ActionListener {
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
-    private final JLabel theme = new JLabel("Tema:");
+    private final JLabel theme = new JLabel("                Tema:");
     private final JButton startButton = new JButton("Starta");
     private final JButton exitbutton = new JButton("Avsluta");
     private final JPanel headPanel = new JPanel();
@@ -35,39 +36,46 @@ public class Panel extends JFrame implements ActionListener {
     private Color numberColor;
 
     Panel() {
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 200);
+        setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
+        infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        infoLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        add(p);
+        p.setBackground(Color.white);
         p.setLayout(new BorderLayout());
         p.add(infoLabel, BorderLayout.NORTH);
-        infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+        p.add(buttonpanel, BorderLayout.SOUTH);
         buttonpanel.setLayout(new GridLayout());
         buttonpanel.add(startButton);
         buttonpanel.add(exitbutton);
         buttonpanel.add(theme);
         buttonpanel.add(dropDown);
-        p.add(buttonpanel, BorderLayout.SOUTH);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400, 200);
-        add(p);
-        setVisible(true);
+        buttonpanel.setOpaque(true);
+        dropDown.setBackground(Color.white);
         buttonpanel.setBackground(Color.white);
-        p.setBackground(Color.white);
-        startButton.setBackground(new Color(155258963));
-        startButton.setForeground(Color.green);
-        exitbutton.setBackground(new Color(155258963));
-        exitbutton.setForeground(Color.green);
-        shuffleButton.setBackground(new Color(155258963));
-        shuffleButton.setForeground(Color.green);
+        buttonpanel.updateUI();
         startButton.addActionListener(this);
         exitbutton.addActionListener(this);
         shuffleButton.addActionListener(this);
+        setVisible(true);
         pack();
-
         dropDown.addActionListener(e -> {
             String selectedItem = (String) dropDown.getSelectedItem();
             assert selectedItem != null;
             switch (selectedItem) {
+                case "Default":
+                    startButton.setBackground(new JButton().getBackground());
+                    startButton.setForeground(new JButton().getForeground());
+                    exitbutton.setBackground(new JButton().getBackground());
+                    exitbutton.setForeground(new JButton().getForeground());
+                    shuffleButton.setBackground(new JButton().getBackground());
+                    shuffleButton.setForeground(new JButton().getForeground());
+                    bottomPanel.setBackground(new JButton().getBackground());
+                    headPanel.setBackground(new JButton().getForeground());
+                    break;
+
                 case "Joker":
                     startButton.setBackground(new Color(155258963));
                     startButton.setForeground(Color.green);
@@ -149,7 +157,7 @@ public class Panel extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             dispose();
-            music();
+           // music();
             gamePanal();
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
@@ -223,7 +231,8 @@ public class Panel extends JFrame implements ActionListener {
         //f.getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG); //välja egen borderfärgtema
         headLabel.setFont(new Font("Arial", Font.BOLD, 60));
         inc.setFont(new Font("Arial", Font.BOLD, 20));
-        inc.setForeground(Color.black);
+        inc.setForeground(numberColor);
+        headLabel.setForeground(numberColor);
         headPanel.add(headLabel);
         headPanel.add(inc);
         bottomPanel.add(shuffleButton);
@@ -234,7 +243,7 @@ public class Panel extends JFrame implements ActionListener {
         f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
         f.setResizable(false);
         f.add(addButtons(), BorderLayout.CENTER);
-        f.setSize(800, 600);
+        f.setSize(800, 800);
         pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
@@ -243,16 +252,17 @@ public class Panel extends JFrame implements ActionListener {
     private JPanel addButtons() {
         JPanel grid = new JPanel();
         int counter = 0;
-        //int[] randomNumbersInGame = randomNumbersInGame();
+        int[] randomNumbersInGame = randomNumbersInGame();
         gameboard = new JButton[4][4];
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 counter++;
-                //gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
-                gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter - 1]));
-                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 40));
+                gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
+                //gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter - 1]));
+                gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 50));
                 gameboard[x][y].setBackground(buttonColor);
                 gameboard[x][y].setForeground(numberColor);
+                gameboard[x][y].setBorder(new LineBorder(Color.black, Font.BOLD));
                 gameboard[x][y].addActionListener(this);
                 grid.add(gameboard[x][y]);
                 grid.setLayout(new GridLayout(4, 4));
@@ -299,7 +309,7 @@ public class Panel extends JFrame implements ActionListener {
             ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
     public static void main(String[] args) throws LineUnavailableException {
