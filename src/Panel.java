@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
 
-
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
@@ -157,7 +156,7 @@ public class Panel extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             dispose();
-            music();
+            backroundMusic(true);
             gamePanal();
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
@@ -211,9 +210,11 @@ public class Panel extends JFrame implements ActionListener {
                                 if (g.length() == 21 && winConditionCounter == 1) {
                                     if (didWeWin(g)) {
                                         dispose();
-                                        JOptionPane.showMessageDialog(null, "WINNER WINNER " +
-                                                "CHICKEN DINNER!\nCongratulations, You Did Your Job. Do You Want a " +
-                                                "Cookie?\nNow Back To Your Real Job!");
+                                        backroundMusic(false);
+                                        victory();
+                                        //JOptionPane.showMessageDialog(null, "WINNER WINNER " +
+                                        //        "CHICKEN DINNER!\nCongratulations, You Did Your Job. Do You Want a " +
+                                        //        "Cookie?\nNow Back To Your Real Job!");
                                     }
                                 }
                             }
@@ -293,15 +294,21 @@ public class Panel extends JFrame implements ActionListener {
         }
     }
 
-    public void music() {
+    public void backroundMusic(boolean play){
         File musicPath1 = new File("C:/Users/wilhe/Desktop/Memefest/TSFH.wav");
         File musicPath2 = new File("C:/Users/wilhe/Desktop/Memefest/MegaMan2.wav");
+        File musicPath3 = new File("C:/Users/wilhe/Desktop/Memefest/victorywav.wav");
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(musicPath2);
-            Clip clip = AudioSystem.getClip();
+        AudioInputStream ais = AudioSystem.getAudioInputStream(musicPath2);
+        Clip clip = AudioSystem.getClip();
+        if (play) {
             clip.open(ais);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (LineUnavailableException ex) {
+        }else {
+            clip.drain();
+            clip.close();
+        }
+        }catch (LineUnavailableException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -310,6 +317,20 @@ public class Panel extends JFrame implements ActionListener {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void victory() {
+        File gifpath = new File("C:/Users/wilhe/Desktop/Memefest/victorygif.gif");
+        Icon icon = new ImageIcon(String.valueOf(gifpath));
+        JLabel label = new JLabel(icon);
+        JFrame f = new JFrame();
+        f.getContentPane().add(label);
+        f.setTitle("Congratulations, You Did Your Job. Do You Want a Cookie?");
+        f.setResizable(false);
+        f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }
 
     public static void main(String[] args) throws LineUnavailableException {
