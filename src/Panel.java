@@ -157,7 +157,7 @@ public class Panel extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             dispose();
-           // music();
+            music();
             gamePanal();
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
@@ -257,8 +257,8 @@ public class Panel extends JFrame implements ActionListener {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 counter++;
-                gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
-                //gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter - 1]));
+                //gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
+                gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter - 1]));
                 gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 50));
                 gameboard[x][y].setBackground(buttonColor);
                 gameboard[x][y].setForeground(numberColor);
@@ -309,7 +309,7 @@ public class Panel extends JFrame implements ActionListener {
             ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
-        }*/
+        }
     }
 
     public static void main(String[] args) throws LineUnavailableException {
