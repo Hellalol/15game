@@ -269,7 +269,6 @@ public class Panel extends JFrame implements ActionListener {
     public void gamePanal() {
         JFrame f = new JFrame();
         f.setUndecorated(true);
-        //f.getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG); //välja egen borderfärgtema
         headLabel.setFont(new Font("Arial", Font.BOLD, 60));
         inc.setFont(new Font("Arial", Font.BOLD, 20));
         inc.setForeground(numberColor);
