@@ -6,34 +6,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
-
-
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
-    private final JLabel infoLabel = new JLabel("Välkommen till 15game");
-    private final JLabel theme = new JLabel("                Tema:");
-    private final JButton startButton = new JButton("Starta");
-    private final JButton exitbutton = new JButton("Avsluta");
     private final JPanel headPanel = new JPanel();
     private final JPanel bottomPanel = new JPanel();
-    private final JLabel headLabel = new JLabel("15GAME");
+    private final JPanel DPanel = new JPanel();
+    private final JLabel infoLabel = new JLabel("Välkommen till 15game");
+    private final JLabel theme = new JLabel("                Tema:");
+    private final JLabel headLabel = new JLabel();
+    private String title = "Fifteen Puzzle ::: Produced by FreWil\u00A9";
     private final JLabel inc = new JLabel("\u00A9");
+    private final JButton startButton = new JButton("Starta");
+    private final JButton exitbutton = new JButton("Avsluta");
     private final JButton shuffleButton = new JButton("Blanda om");
+    private final ButtonGroup dGroup = new ButtonGroup();
+    private final JRadioButton difficultyEasy = new JRadioButton("3x3");
+    private final JRadioButton difficultyMedium = new JRadioButton("4x4");
+    private final JRadioButton difficultyHard = new JRadioButton("5x5");
     private String[] themeChoices = {"Default", "Joker", "Dark", "Basic", "BlåOrange", "Soviet", "Rålit"};
     private final JComboBox<String> dropDown = new JComboBox<>(themeChoices);
-    private static JButton[][] gameboard = new JButton[4][4];
-    private final String solved = "159132610143711154812";
-    private final int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
-    private final int[] almostsolved = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15};
+    private static int xyCord = 4;
+    private static JButton[][] gameboard = new JButton[xyCord][xyCord];
+    private int[] zeroToFifteen = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15};
+    private final int[] zeroToNine = {1, 2, 3, 4, 5, 6, 7, 0 , 8};
+    private final int[] zeroToTwentyFour =
+            {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 24};
+
     private int randomColorNumber1 = (int) (Math.random() * 999999999);
     private int randomColorNumber2 = (int) (Math.random() * 999999999);
     private Color randomColor1 = new Color(randomColorNumber1);
     private Color randomColor2 = new Color(randomColorNumber2);
     private Color buttonColor;
     private Color numberColor;
+
 
     Panel() {
         setLocationRelativeTo(null);
@@ -46,6 +53,17 @@ public class Panel extends JFrame implements ActionListener {
         p.setBackground(Color.white);
         p.setLayout(new BorderLayout());
         p.add(infoLabel, BorderLayout.NORTH);
+        p.add(DPanel, BorderLayout.WEST);
+        DPanel.setLayout(new GridBagLayout());
+        difficultyEasy.setBackground(Color.white);
+        difficultyMedium.setBackground(Color.white);
+        difficultyHard.setBackground(Color.white);
+        dGroup.add(difficultyEasy);
+        dGroup.add(difficultyMedium);
+        dGroup.add(difficultyHard);
+        DPanel.add(difficultyEasy);
+        DPanel.add(difficultyMedium);
+        DPanel.add(difficultyHard);
         p.add(buttonpanel, BorderLayout.SOUTH);
         buttonpanel.setLayout(new GridLayout());
         buttonpanel.add(startButton);
@@ -61,6 +79,27 @@ public class Panel extends JFrame implements ActionListener {
         shuffleButton.addActionListener(this);
         setVisible(true);
         pack();
+        difficultyEasy.addActionListener(e -> {
+            xyCord = 3;
+            zeroToFifteen = zeroToNine;
+            headLabel.setText("8GAME");
+            infoLabel.setText("Välkommen till 8game");
+            setTitle("Eight Puzzle ::: Produced by FreWil\u00A9");
+
+        });
+        difficultyMedium.addActionListener(e -> {
+            xyCord = 4;
+            headLabel.setText("15GAME");
+            infoLabel.setText("Välkommen till 15game");
+            setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
+        });
+        difficultyHard.addActionListener(e -> {
+            xyCord = 5;
+            zeroToFifteen = zeroToTwentyFour;
+            headLabel.setText("24GAME");
+            infoLabel.setText("Välkommen till 24game");
+            setTitle("Twentyfour Puzzle ::: Produced by FreWil\u00A9");
+        });
         dropDown.addActionListener(e -> {
             String selectedItem = (String) dropDown.getSelectedItem();
             assert selectedItem != null;
@@ -157,7 +196,7 @@ public class Panel extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
             dispose();
-           // music();
+            // music();
             gamePanal();
         } else if (e.getSource() == exitbutton) {
             System.exit(0);
@@ -168,8 +207,8 @@ public class Panel extends JFrame implements ActionListener {
             gamePanal();
 
         } else {
-            for (int y = 0; y < 4; y++) {
-                for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < xyCord; y++) {
+                for (int x = 0; x < xyCord; x++) {
                     if (gameboard[y][x] == e.getSource()) {
                         try {
                             if (gameboard[y - 1][x].getText().equals("")) {
@@ -205,15 +244,18 @@ public class Panel extends JFrame implements ActionListener {
                         for (int i = 0; i < gameboard.length; i++) {
                             for (int j = 0; j < gameboard[i].length; j++) {
                                 g += gameboard[i][j].getText();
-                                if(g.length() == 21){
+                                if (g.length() == 8 || g.length() == 21|| g.length() == 39)  {
                                     winConditionCounter++;
                                 }
-                                if (g.length() == 21 && winConditionCounter == 1) {
+                                if (g.length() == 8 && winConditionCounter == 1||
+                                        g.length() == 21 && winConditionCounter == 1||
+                                        g.length() == 39 && winConditionCounter == 3) {
                                     if (didWeWin(g)) {
                                         dispose();
                                         JOptionPane.showMessageDialog(null, "WINNER WINNER " +
                                                 "CHICKEN DINNER!\nCongratulations, You Did Your Job. Do You Want a " +
                                                 "Cookie?\nNow Back To Your Real Job!");
+                                        System.exit(0);
                                     }
                                 }
                             }
@@ -240,7 +282,7 @@ public class Panel extends JFrame implements ActionListener {
         f.add(headPanel, BorderLayout.NORTH);
         f.add(bottomPanel, BorderLayout.SOUTH);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setTitle("Fifteen Puzzle ::: Produced by FreWil\u00A9");
+        f.setTitle(title);
         f.setResizable(false);
         f.add(addButtons(), BorderLayout.CENTER);
         f.setSize(800, 800);
@@ -252,12 +294,14 @@ public class Panel extends JFrame implements ActionListener {
     private JPanel addButtons() {
         JPanel grid = new JPanel();
         int counter = 0;
-        int[] randomNumbersInGame = randomNumbersInGame();
-        gameboard = new JButton[4][4];
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+        ToolBox.randomNumbersInGame(zeroToFifteen);
+        gameboard = new JButton[xyCord][xyCord];
+        for (int y = 0; y < xyCord; y++) {
+            for (int x = 0; x < xyCord; x++) {
                 counter++;
-                gameboard[x][y] = new JButton(String.valueOf(randomNumbersInGame[counter - 1]));
+                gameboard[x][y] = new JButton(String.valueOf(zeroToFifteen[counter - 1]));
+                //gameboard[x][y] = new JButton((randomNumbersInGame(zeroToFifteen) = new int[counter]));
+                //gameboard[x][y] = new JButton(String.valueOf(counter - 1));
                 //gameboard[x][y] = new JButton(String.valueOf(almostsolved[counter - 1]));
                 gameboard[x][y].setFont(new Font("Arial", Font.PLAIN, 50));
                 gameboard[x][y].setBackground(buttonColor);
@@ -265,7 +309,7 @@ public class Panel extends JFrame implements ActionListener {
                 gameboard[x][y].setBorder(new LineBorder(Color.black, Font.BOLD));
                 gameboard[x][y].addActionListener(this);
                 grid.add(gameboard[x][y]);
-                grid.setLayout(new GridLayout(4, 4));
+                grid.setLayout(new GridLayout(xyCord, xyCord));
                 if (gameboard[x][y].getText().equalsIgnoreCase("0")) {
                     gameboard[x][y].setText("");
                 }
@@ -274,19 +318,15 @@ public class Panel extends JFrame implements ActionListener {
         return grid;
     }
 
-    public int[] randomNumbersInGame() {
-        Random random = new Random();
-        for (int i = zeroToFifteen.length - 1; i > 0; i--) {
-            int index = random.nextInt(i + 1);
-            int temp = zeroToFifteen[index];
-            zeroToFifteen[index] = zeroToFifteen[i];
-            zeroToFifteen[i] = temp;
-        }
-        return zeroToFifteen;
-    }
+
 
     public boolean didWeWin(String checkIfSolved) {
-        if (checkIfSolved.equalsIgnoreCase(solved)) {
+        String easySolved = "14725836";
+        String mediumSolved = "159132610143711154812";
+        String hardSolved = "161116212712172238131823491419245101520";
+        if (checkIfSolved.equalsIgnoreCase(easySolved)||
+                checkIfSolved.equalsIgnoreCase(mediumSolved)||
+                checkIfSolved.equalsIgnoreCase(hardSolved)) {
             return true;
         } else {
             return false;
