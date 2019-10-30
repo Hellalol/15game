@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class Panel extends JFrame implements ActionListener {
 
-
     private final JPanel p = new JPanel();
     private final JPanel buttonpanel = new JPanel();
     private final JLabel infoLabel = new JLabel("Välkommen till 15game");
@@ -326,7 +325,7 @@ public class Panel extends JFrame implements ActionListener {
         JLabel label = new JLabel(icon);
         JFrame f = new JFrame();
         f.getContentPane().add(label);
-        f.setTitle("Congratulations, You Did Your Job. Do You Want a Cookie?");
+        f.setTitle("Congratulations, Now Quit Slacking And Go Back To Work!");
         f.setResizable(false);
         f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         f.pack();
